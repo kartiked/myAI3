@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     const result = streamText({
 
         // Ensure the model has enough info to call the hotel tool
-const lastUserMessage = messages[messages.length - 1]?.content?.toLowerCase() ?? "";
+//const lastUserMessage = messages[messages.length - 1]?.content?.toLowerCase() ?? "";
 // No logic here yet — kept simple for MVP
 
         model: MODEL,
