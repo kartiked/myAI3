@@ -1,9 +1,10 @@
-import { searchHotelsTool } from "./tools/search-hotels";
+
 
 import { streamText, UIMessage, convertToModelMessages, stepCountIs, createUIMessageStream, createUIMessageStreamResponse } from 'ai';
 import { MODEL } from '@/config';
 import { SYSTEM_PROMPT } from '@/prompts';
 import { isContentFlagged } from '@/lib/moderation';
+import { searchHotelsTool } from "./tools/search-hotels";
 import { webSearch } from './tools/web-search';
 import { vectorDatabaseSearch } from './tools/search-vector-database';
 
@@ -61,6 +62,11 @@ export async function POST(req: Request) {
     }
 
     const result = streamText({
+
+        // Ensure the model has enough info to call the hotel tool
+const lastUserMessage = messages[messages.length - 1]?.content?.toLowerCase() ?? "";
+// No logic here yet — kept simple for MVP
+
         model: MODEL,
         system: SYSTEM_PROMPT,
         messages: convertToModelMessages(messages),
