@@ -1,3 +1,4 @@
+import { searchHotelsTool } from "./tools/search-hotels";
 
 import { streamText, UIMessage, convertToModelMessages, stepCountIs, createUIMessageStream, createUIMessageStreamResponse } from 'ai';
 import { MODEL } from '@/config';
@@ -66,6 +67,7 @@ export async function POST(req: Request) {
         tools: {
             webSearch,
             vectorDatabaseSearch,
+            searchHotelsTool,
         },
         stopWhen: stepCountIs(10),
         providerOptions: {
