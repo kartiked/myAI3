@@ -138,7 +138,8 @@ export default function Chat() {
 
 
    return (
-  <div className="min-h-screen bg-gray-50 font-sans flex justify-center">
+  <div className="min-h-screen font-sans flex justify-center bg-gradient-to-br from-[#EDF2F7] via-[#FFFFFF] to-[#FDECEB]">
+
       <main className="w-full max-w-3xl bg-white h-screen relative shadow-sm">
 
         <div className="fixed top-0 left-0 right-0 z-50 bg-linear-to-b from-background via-background/50 to-transparent dark:bg-black overflow-visible pb-16">
