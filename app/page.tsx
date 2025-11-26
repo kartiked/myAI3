@@ -156,7 +156,7 @@ export default function Chat() {
     <div className="relative w-14 h-14 rounded-2xl bg-[#003580]/5 flex items-center justify-center ring-2 ring-[#ffb35a]/60 shadow-sm">
       <div className="absolute inset-0 rounded-2xl bg-white/40" />
       <img
-        src="/mandy-logo.svg"  // make sure this file is in /public
+        src="/file.svg"  // make sure this file is in /public
         alt="LastMinuteMandy logo"
         className="relative w-9 h-9"
       />
