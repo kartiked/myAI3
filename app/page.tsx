@@ -140,7 +140,7 @@ export default function Chat() {
    return (
   <div className="min-h-screen font-sans flex justify-center bg-gradient-to-br from-[#EDF2F7] via-[#FFFFFF] to-[#FDECEB]">
 
-      <main className="w-full max-w-3xl bg-white h-screen relative shadow-sm">
+      <main className="w-full max-w-3xl h-screen bg-white/90 backdrop-blur-xl shadow-xl rounded-2xl border border-gray-200 relative">
 
         <div className="fixed top-0 left-0 right-0 z-50 bg-linear-to-b from-background via-background/50 to-transparent dark:bg-black overflow-visible pb-16">
           <div className="relative overflow-visible">
@@ -149,8 +149,14 @@ export default function Chat() {
               <header className="w-full py-6 flex flex-col items-center bg-white shadow-sm border-b">
   <img 
     src="/file.svg"     // 👈 change to your file (hotel.svg, hotel.png, etc.)
-    alt="Hotel icon"
-    className="w-10 h-10 mb-2 opacity-80"
+    alt="LastMinuteMandy logo"
+    className="w-16 h-16 drop-shadow-md"
+  />
+  <div className="flex flex-col">
+    <span className="text-lg font-bold text-[#0B2742]">LastMinuteMandy</span>
+    <span className="text-xs text-gray-500 -mt-1">
+      Your 60-second hotel rescue assistant
+    </span>
   />
   <h1 className="text-xl font-semibold text-[#003580]">
     {AI_NAME}
