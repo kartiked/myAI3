@@ -143,17 +143,20 @@ export default function Chat() {
           <div className="relative overflow-visible">
             <ChatHeader>
               <ChatHeaderBlock />
-              <ChatHeaderBlock className="justify-center items-center">
-                <Avatar
-                  className="size-8 ring-1 ring-primary"
-                >
-                  <AvatarImage src="/logo.png" />
-                  <AvatarFallback>
-                    <Image src="/logo.png" alt="Logo" width={36} height={36} />
-                  </AvatarFallback>
-                </Avatar>
-                <p className="tracking-tight">Chat with {AI_NAME}</p>
-              </ChatHeaderBlock>
+              <header className="w-full py-6 flex flex-col items-center bg-white shadow-sm border-b">
+  <img 
+    src="/file.svg"     // 👈 change to your file (hotel.svg, hotel.png, etc.)
+    alt="Hotel icon"
+    className="w-10 h-10 mb-2 opacity-80"
+  />
+  <h1 className="text-xl font-semibold text-[#003580]">
+    {AI_NAME}
+  </h1>
+  <p className="text-sm text-gray-500 tracking-tight">
+    Your Last-Minute Hotel Assistant
+  </p>
+</header>
+
               <ChatHeaderBlock className="justify-end">
                 <Button
                   variant="outline"
