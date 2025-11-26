@@ -13,15 +13,11 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useChat } from "@ai-sdk/react";
-import { ArrowUp, Eraser, Loader2, Plus, PlusIcon, Square } from "lucide-react";
+import { ArrowUp, Loader2, Plus, Square } from "lucide-react";
 import { MessageWall } from "@/components/messages/message-wall";
-import { ChatHeader } from "@/app/parts/chat-header";
-import { ChatHeaderBlock } from "@/app/parts/chat-header";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UIMessage } from "ai";
 import { useEffect, useState, useRef } from "react";
 import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
-import Image from "next/image";
 import Link from "next/link";
 
 const formSchema = z.object({
@@ -31,15 +27,18 @@ const formSchema = z.object({
     .max(2000, "Message must be at most 2000 characters."),
 });
 
-const STORAGE_KEY = 'chat-messages';
+const STORAGE_KEY = "chat-messages";
 
 type StorageData = {
   messages: UIMessage[];
   durations: Record<string, number>;
 };
 
-const loadMessagesFromStorage = (): { messages: UIMessage[]; durations: Record<string, number> } => {
-  if (typeof window === 'undefined') return { messages: [], durations: {} };
+const loadMessagesFromStorage = (): {
+  messages: UIMessage[];
+  durations: Record<string, number>;
+} => {
+  if (typeof window === "undefined") return { messages: [], durations: {} };
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return { messages: [], durations: {} };
@@ -50,18 +49,21 @@ const loadMessagesFromStorage = (): { messages: UIMessage[]; durations: Record<s
       durations: parsed.durations || {},
     };
   } catch (error) {
-    console.error('Failed to load messages from localStorage:', error);
+    console.error("Failed to load messages from localStorage:", error);
     return { messages: [], durations: {} };
   }
 };
 
-const saveMessagesToStorage = (messages: UIMessage[], durations: Record<string, number>) => {
-  if (typeof window === 'undefined') return;
+const saveMessagesToStorage = (
+  messages: UIMessage[],
+  durations: Record<string, number>
+) => {
+  if (typeof window === "undefined") return;
   try {
     const data: StorageData = { messages, durations };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
-    console.error('Failed to save messages to localStorage:', error);
+    console.error("Failed to save messages from localStorage:", error);
   }
 };
 
@@ -70,7 +72,10 @@ export default function Chat() {
   const [durations, setDurations] = useState<Record<string, number>>({});
   const welcomeMessageShownRef = useRef<boolean>(false);
 
-  const stored = typeof window !== 'undefined' ? loadMessagesFromStorage() : { messages: [], durations: {} };
+  const stored =
+    typeof window !== "undefined"
+      ? loadMessagesFromStorage()
+      : { messages: [], durations: {} };
   const [initialMessages] = useState<UIMessage[]>(stored.messages);
 
   const { messages, sendMessage, status, stop, setMessages } = useChat({
@@ -81,6 +86,7 @@ export default function Chat() {
     setIsClient(true);
     setDurations(stored.durations);
     setMessages(stored.messages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -98,7 +104,11 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    if (isClient && initialMessages.length === 0 && !welcomeMessageShownRef.current) {
+    if (
+      isClient &&
+      initialMessages.length === 0 &&
+      !welcomeMessageShownRef.current
+    ) {
       const welcomeMessage: UIMessage = {
         id: `welcome-${Date.now()}`,
         role: "assistant",
@@ -136,128 +146,137 @@ export default function Chat() {
     toast.success("Chat cleared");
   }
 
-
-   return (
-  <div className="min-h-screen font-sans flex justify-center bg-gradient-to-br from-[#EDF2F7] via-[#FFFFFF] to-[#FDECEB]">
-
-      <main className="w-full max-w-3xl h-screen bg-white/90 backdrop-blur-xl shadow-xl rounded-2xl border border-gray-200 relative">
-
-        <div className="fixed top-0 left-0 right-0 z-50 bg-linear-to-b from-background via-background/50 to-transparent dark:bg-black overflow-visible pb-16">
-          <div className="relative overflow-visible">
-            <ChatHeader>
-              <ChatHeaderBlock />
-              <header className="w-full py-6 flex flex-col items-center bg-white shadow-sm border-b">
-  <div className="flex items-center gap-4">
-  <img 
-    src="/file.svg"     // 👈 change to your file (hotel.svg, hotel.png, etc.)
-    alt="LastMinuteMandy logo"
-    className="w-16 h-16 drop-shadow-md"
-  />
-  <div className="flex flex-col">
-    <span className="text-lg font-bold text-[#0B2742]">LastMinuteMandy</span>
-    <span className="text-xs text-gray-500 -mt-1">
-      Your 60-second hotel rescue assistant
-    </span>
-  </div>
-</div>
-</header>
-
-              <ChatHeaderBlock className="justify-end">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="cursor-pointer"
-                  onClick={clearChat}
-                >
-                  <Plus className="size-4" />
-                  {CLEAR_CHAT_TEXT}
-                </Button>
-              </ChatHeaderBlock>
-            </ChatHeader>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#f5f7fb] via-[#fffdfb] to-[#ffe8dd] flex items-center justify-center px-4 py-6">
+      <main className="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden">
+        {/* Top brand bar (scrolls with content – not fixed) */}
+        <header className="flex items-center justify-between px-5 py-4 border-b bg-white/90">
+          <div className="flex items-center gap-3">
+            {/* Logo */}
+            <div className="w-11 h-11 rounded-xl bg-[#003580]/5 flex items-center justify-center ring-1 ring-[#003580]/10">
+              <img
+                src="/file.svg" // put your logo file in /public
+                alt="LastMinuteMandy logo"
+                className="w-7 h-7"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold text-[#003580]">
+                LastMinuteMandy
+              </span>
+              <span className="text-xs text-slate-500">
+                Your 60-second hotel rescue assistant
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="h-screen overflow-y-auto px-5 py-4 w-full pt-[88px] pb-[150px]">
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-xs gap-1"
+            onClick={clearChat}
+          >
+            <Plus className="w-3 h-3" />
+            {CLEAR_CHAT_TEXT}
+          </Button>
+        </header>
+
+        {/* Messages area */}
+        <div className="flex-1 overflow-y-auto px-5 py-4">
           <div className="flex flex-col items-center justify-end min-h-full">
             {isClient ? (
               <>
-                <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
+                <MessageWall
+                  messages={messages}
+                  status={status}
+                  durations={durations}
+                  onDurationChange={handleDurationChange}
+                />
                 {status === "submitted" && (
-                  <div className="flex justify-start max-w-3xl w-full">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                  <div className="flex justify-start max-w-3xl w-full mt-2">
+                    <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
                   </div>
                 )}
               </>
             ) : (
               <div className="flex justify-center max-w-2xl w-full">
-                <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
               </div>
             )}
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-linear-to-t from-background via-background/50 to-transparent dark:bg-black overflow-visible pt-13">
-          <div className="w-full px-5 pt-5 pb-1 items-center flex justify-center relative overflow-visible">
-            <div className="message-fade-overlay" />
-            <div className="max-w-3xl w-full">
-              <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
-                <FieldGroup>
-                  <Controller
-                    name="message"
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="chat-form-message" className="sr-only">
-                          Message
-                        </FieldLabel>
-                        <div className="relative h-13">
-                          <Input
-                            {...field}
-                            id="chat-form-message"
-                            className="h-15 pr-15 pl-5 bg-card rounded-[20px]"
-                            placeholder="Type your message here..."
-                            disabled={status === "streaming"}
-                            aria-invalid={fieldState.invalid}
-                            autoComplete="off"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter" && !e.shiftKey) {
-                                e.preventDefault();
-                                form.handleSubmit(onSubmit)();
-                              }
-                            }}
-                          />
-                          {(status == "ready" || status == "error") && (
-                            <Button
-                              className="absolute right-3 top-3 rounded-full"
-                              type="submit"
-                              disabled={!field.value.trim()}
-                              size="icon"
-                            >
-                              <ArrowUp className="size-4" />
-                            </Button>
-                          )}
-                          {(status == "streaming" || status == "submitted") && (
-                            <Button
-                              className="absolute right-2 top-2 rounded-full"
-                              size="icon"
-                              onClick={() => {
-                                stop();
-                              }}
-                            >
-                              <Square className="size-4" />
-                            </Button>
-                          )}
-                        </div>
-                      </Field>
-                    )}
-                  />
-                </FieldGroup>
-              </form>
-            </div>
+
+        {/* Input + footer */}
+        <footer className="border-t bg-white/90 px-5 pt-3 pb-2">
+          <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
+            <FieldGroup>
+              <Controller
+                name="message"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel
+                      htmlFor="chat-form-message"
+                      className="sr-only"
+                    >
+                      Message
+                    </FieldLabel>
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        id="chat-form-message"
+                        className="h-12 pr-12 pl-4 rounded-full bg-slate-50 border-slate-200 focus-visible:ring-[#003580]"
+                        placeholder="Ask Mandy for last-minute hotel help…"
+                        disabled={status === "streaming"}
+                        aria-invalid={fieldState.invalid}
+                        autoComplete="off"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            form.handleSubmit(onSubmit)();
+                          }
+                        }}
+                      />
+                      {(status === "ready" || status === "error") && (
+                        <Button
+                          className="absolute right-1.5 top-1.5 rounded-full h-9 w-9 bg-[#003580] hover:bg-[#022347]"
+                          type="submit"
+                          disabled={!field.value.trim()}
+                          size="icon"
+                        >
+                          <ArrowUp className="w-4 h-4" />
+                        </Button>
+                      )}
+                      {(status === "streaming" || status === "submitted") && (
+                        <Button
+                          className="absolute right-1.5 top-1.5 rounded-full h-9 w-9"
+                          size="icon"
+                          variant="outline"
+                          onClick={() => {
+                            stop();
+                          }}
+                        >
+                          <Square className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </Field>
+                )}
+              />
+            </FieldGroup>
+          </form>
+
+          <div className="mt-2 text-[11px] text-center text-muted-foreground">
+            © {new Date().getFullYear()} {OWNER_NAME} ·{" "}
+            <Link href="/terms" className="underline">
+              Terms of Use
+            </Link>{" "}
+            · Powered by{" "}
+            <Link href="https://ringel.ai/" className="underline">
+              Ringel.AI
+            </Link>
           </div>
-          <div className="w-full px-5 py-3 items-center flex justify-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {OWNER_NAME}&nbsp;<Link href="/terms" className="underline">Terms of Use</Link>&nbsp;Powered by&nbsp;<Link href="https://ringel.ai/" className="underline">Ringel.AI</Link>
-          </div>
-        </div>
+        </footer>
       </main>
-    </div >
+    </div>
   );
 }
