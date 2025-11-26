@@ -147,6 +147,7 @@ export default function Chat() {
             <ChatHeader>
               <ChatHeaderBlock />
               <header className="w-full py-6 flex flex-col items-center bg-white shadow-sm border-b">
+  <div className="flex items-center gap-4">
   <img 
     src="/file.svg"     // 👈 change to your file (hotel.svg, hotel.png, etc.)
     alt="LastMinuteMandy logo"
@@ -157,13 +158,8 @@ export default function Chat() {
     <span className="text-xs text-gray-500 -mt-1">
       Your 60-second hotel rescue assistant
     </span>
-  />
-  <h1 className="text-xl font-semibold text-[#003580]">
-    {AI_NAME}
-  </h1>
-  <p className="text-sm text-gray-500 tracking-tight">
-    Your Last-Minute Hotel Assistant
-  </p>
+  </div>
+</div>
 </header>
 
               <ChatHeaderBlock className="justify-end">
