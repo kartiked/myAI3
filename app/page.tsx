@@ -136,7 +136,7 @@ export default function Chat() {
     toast.success("Chat cleared");
   }
 
-  return (
+
    return (
   <div className="min-h-screen bg-gray-50 font-sans flex justify-center">
       <main className="w-full max-w-3xl bg-white h-screen relative shadow-sm">
