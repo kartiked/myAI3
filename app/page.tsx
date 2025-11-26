@@ -150,35 +150,46 @@ export default function Chat() {
     <div className="min-h-screen bg-gradient-to-br from-[#f5f7fb] via-[#fffdfb] to-[#ffe8dd] flex items-center justify-center px-4 py-6">
       <main className="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden">
         {/* Top brand bar (scrolls with content – not fixed) */}
-        <header className="flex items-center justify-between px-5 py-4 border-b bg-white/90">
-          <div className="flex items-center gap-3">
-            {/* Logo */}
-            <div className="w-11 h-11 rounded-xl bg-[#003580]/5 flex items-center justify-center ring-1 ring-[#003580]/10">
-              <img
-                src="/file.svg" // put your logo file in /public
-                alt="LastMinuteMandy logo"
-                className="w-7 h-7"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-semibold text-[#003580]">
-                LastMinuteMandy
-              </span>
-              <span className="text-xs text-slate-500">
-                Your 60-second hotel rescue assistant
-              </span>
-            </div>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-xs gap-1"
-            onClick={clearChat}
-          >
-            <Plus className="w-3 h-3" />
-            {CLEAR_CHAT_TEXT}
-          </Button>
-        </header>
+       <header className="flex items-center justify-between px-6 py-5 border-b bg-white/95">
+  <div className="flex items-center gap-4">
+    {/* Logo tile */}
+    <div className="relative w-14 h-14 rounded-2xl bg-[#003580]/5 flex items-center justify-center ring-2 ring-[#ffb35a]/60 shadow-sm">
+      <div className="absolute inset-0 rounded-2xl bg-white/40" />
+      <img
+        src="/mandy-logo.svg"  // make sure this file is in /public
+        alt="LastMinuteMandy logo"
+        className="relative w-9 h-9"
+      />
+    </div>
+
+    {/* Brand text */}
+    <div className="flex flex-col leading-tight">
+      <div className="flex items-center gap-2">
+        <span className="text-xl font-semibold tracking-tight text-[#003580]">
+          LastMinuteMandy
+        </span>
+        <span className="inline-flex items-center rounded-full border border-[#ffb35a]/60 bg-[#fff3dd] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#b86a1f]">
+          Beta
+        </span>
+      </div>
+      <span className="mt-1 text-sm text-slate-600">
+        Smart, safety-aware hotel picks when you’re in a rush.
+      </span>
+    </div>
+  </div>
+
+  {/* New chat button */}
+  <Button
+    variant="outline"
+    size="sm"
+    className="rounded-full text-xs font-medium gap-1 border-slate-200 bg-slate-50 hover:bg-slate-100"
+    onClick={clearChat}
+  >
+    <Plus className="w-3 h-3" />
+    New search
+  </Button>
+</header>
+
 
         {/* Messages area */}
         <div className="flex-1 overflow-y-auto px-5 py-4">
