@@ -6,11 +6,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useChat } from "@ai-sdk/react";
 import { ArrowUp, Loader2, Plus, Square } from "lucide-react";
@@ -20,10 +16,13 @@ import { useEffect, useState, useRef } from "react";
 import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
 import Link from "next/link";
 
-import { ArrowLeft } from "lucide-react";
-
-
-
+// Suggested example prompts for the home screen
+const SUGGESTED_QUERIES = [
+  "Solo woman, landing in Delhi at 11pm tonight. Budget ₹5–7k. Where should I stay?",
+  "2 adults, New York, 1–3 March. I want a quiet but central area under $250/night.",
+  "Family of 4 visiting NYC for the first time. Which neighborhoods are safest and best for kids?",
+  "Last-minute hotel near Delhi airport for a morning flight, but NOT in a shady area.",
+];
 
 const formSchema = z.object({
   message: z
@@ -68,58 +67,9 @@ const saveMessagesToStorage = (
     const data: StorageData = { messages, durations };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
-    console.error("Failed to save messages from localStorage:", error);
+    console.error("Failed to save messages to localStorage:", error);
   }
 };
-
-export default function TermsPage() {
-    return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-            <div className="max-w-2xl w-full bg-white rounded-3xl shadow-sm border border-slate-100 p-8 sm:p-12">
-                <div className="mb-8">
-                    <Link href="/">
-                        <Button variant="ghost" size="sm" className="gap-2 -ml-4 text-slate-500 hover:text-slate-900">
-                            <ArrowLeft className="w-4 h-4" />
-                            Back to Chat
-                        </Button>
-                    </Link>
-                </div>
-
-                <h1 className="text-3xl font-bold text-slate-900 mb-6">Terms of Use</h1>
-
-                <div className="prose prose-slate max-w-none">
-                    <p className="lead text-lg text-slate-600">
-                        Welcome to LastMinuteMandy. Please read these terms carefully before using our service.
-                    </p>
-
-                    <h3>1. Beta Project Disclaimer</h3>
-                    <p>
-                        <strong>LastMinuteMandy is a beta project</strong> created for demonstration and experimental purposes. It is <strong>not</strong> a licensed travel agency, and it does not facilitate direct bookings or payments.
-                    </p>
-
-                    <h3>2. No Guarantees</h3>
-                    <p>
-                        While we strive to provide accurate information through our integration with hotel search providers, we cannot guarantee the availability, price, or quality of any hotel listed. All information is subject to change without notice.
-                    </p>
-
-                    <h3>3. User Responsibility</h3>
-                    <p>
-                        You are responsible for verifying all details directly with the hotel or booking platform before making any reservations. LastMinuteMandy is not liable for any issues arising from your use of the suggestions provided.
-                    </p>
-
-                    <h3>4. Safety Information</h3>
-                    <p>
-                        Safety assessments provided by the AI are based on general neighborhood data and user reviews. They should not be taken as a guarantee of safety. Always exercise personal caution while traveling.
-                    </p>
-                </div>
-
-                <div className="mt-12 pt-8 border-t border-slate-100 text-center text-slate-500 text-sm">
-                    Last updated: November 2025
-                </div>
-            </div>
-        </div>
-    );
-}
 
 export default function Chat() {
   const [isClient, setIsClient] = useState(false);
@@ -130,6 +80,7 @@ export default function Chat() {
     typeof window !== "undefined"
       ? loadMessagesFromStorage()
       : { messages: [], durations: {} };
+
   const [initialMessages] = useState<UIMessage[]>(stored.messages);
 
   const { messages, sendMessage, status, stop, setMessages } = useChat({
@@ -191,11 +142,9 @@ export default function Chat() {
     form.reset();
   }
 
-  
-
   function clearChat() {
     const newMessages: UIMessage[] = [];
-    const newDurations = {};
+    const newDurations: Record<string, number> = {};
     setMessages(newMessages);
     setDurations(newDurations);
     saveMessagesToStorage(newMessages, newDurations);
@@ -205,59 +154,83 @@ export default function Chat() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f5f7fb] via-[#fffdfb] to-[#ffe8dd] flex items-center justify-center px-4 py-6">
       <main className="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden">
-        {/* Top brand bar (scrolls with content – not fixed) */}
-       <header className="flex items-center justify-between px-6 py-5 border-b bg-white/95">
-  <div className="flex items-center gap-4">
-    {/* Logo tile */}
-    <div className="relative w-14 h-14 rounded-2xl bg-[#003580]/5 flex items-center justify-center ring-2 ring-[#ffb35a]/60 shadow-sm">
-      <div className="absolute inset-0 rounded-2xl bg-white/40" />
-      <img
-        src="/file.svg"  // make sure this file is in /public
-        alt="LastMinuteMandy logo"
-        className="relative w-9 h-9"
-      />
-    </div>
+        {/* Brand header */}
+        <header className="flex items-center justify-between px-6 py-5 border-b bg-white/95">
+          <div className="flex items-center gap-4">
+            {/* Logo tile */}
+            <div className="relative w-14 h-14 rounded-2xl bg-[#003580]/5 flex items-center justify-center ring-2 ring-[#ffb35a]/60 shadow-sm">
+              <div className="absolute inset-0 rounded-2xl bg-white/40" />
+              <img
+                src="/mandy-logo.svg" // ensure this exists in /public
+                alt="LastMinuteMandy logo"
+                className="relative w-9 h-9"
+              />
+            </div>
 
-    {/* Brand text */}
-    <div className="flex flex-col leading-tight">
-      <div className="flex items-center gap-2">
-        <span className="text-xl font-semibold tracking-tight text-[#003580]">
-          LastMinuteMandy
-        </span>
-        <span className="inline-flex items-center rounded-full border border-[#ffb35a]/60 bg-[#fff3dd] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#b86a1f]">
-          Beta
-        </span>
-      </div>
-      <span className="mt-1 text-sm text-slate-600">
-        Smart, safety-aware hotel picks when you’re in a rush.
-      </span>
-    </div>
-  </div>
+            {/* Brand text */}
+            <div className="flex flex-col leading-tight">
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-semibold tracking-tight text-[#003580]">
+                  LastMinuteMandy
+                </span>
+                <span className="inline-flex items-center rounded-full border border-[#ffb35a]/60 bg-[#fff3dd] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#b86a1f]">
+                  Beta
+                </span>
+              </div>
+              <span className="mt-1 text-sm text-slate-600">
+                Smart, safety-aware hotel picks when you&apos;re in a rush.
+              </span>
+            </div>
+          </div>
 
-  {/* New chat button */}
-  <Button
-    variant="outline"
-    size="sm"
-    className="rounded-full text-xs font-medium gap-1 border-slate-200 bg-slate-50 hover:bg-slate-100"
-    onClick={clearChat}
-  >
-    <Plus className="w-3 h-3" />
-    New search
-  </Button>
-</header>
+          {/* New chat button */}
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-full text-xs font-medium gap-1 border-slate-200 bg-slate-50 hover:bg-slate-100"
+            onClick={clearChat}
+          >
+            <Plus className="w-3 h-3" />
+            {CLEAR_CHAT_TEXT || "New search"}
+          </Button>
+        </header>
 
-
-        {/* Messages area */}
+        {/* Messages + suggestions area */}
         <div className="flex-1 overflow-y-auto px-5 py-4">
           <div className="flex flex-col items-center justify-end min-h-full">
             {isClient ? (
               <>
+                {/* Home screen suggestions – only when the chat is essentially fresh */}
+                {messages.length <= 1 && status === "ready" && (
+                  <div className="w-full max-w-3xl mb-4">
+                    <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                      What Mandy can help you with
+                    </div>
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      {SUGGESTED_QUERIES.map((q) => (
+                        <button
+                          key={q}
+                          type="button"
+                          onClick={() => {
+                            form.setValue("message", q);
+                            form.handleSubmit(onSubmit)();
+                          }}
+                          className="text-left rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-2 text-xs text-slate-700 hover:border-[#003580]/40 hover:bg-[#f3f6ff] transition-colors"
+                        >
+                          {q}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <MessageWall
                   messages={messages}
                   status={status}
                   durations={durations}
                   onDurationChange={handleDurationChange}
                 />
+
                 {status === "submitted" && (
                   <div className="flex justify-start max-w-3xl w-full mt-2">
                     <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
@@ -332,7 +305,14 @@ export default function Chat() {
             </FieldGroup>
           </form>
 
-          <div className="mt-2 text-[11px] text-center text-muted-foreground">
+          {/* Beta disclaimer */}
+          <p className="mt-2 text-[11px] text-center text-slate-500">
+            LastMinuteMandy is a beta project. Hotel and neighborhood
+            suggestions may be incomplete or inaccurate and are not a substitute
+            for your own judgment or official travel advisories.
+          </p>
+
+          <div className="mt-1 text-[11px] text-center text-muted-foreground">
             © {new Date().getFullYear()} {OWNER_NAME} ·{" "}
             <Link href="/terms" className="underline">
               Terms of Use
