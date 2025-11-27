@@ -55,6 +55,15 @@ export function Hero({ onSuggestionClick }: HeroProps) {
         <p className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
           Meet MILA
         </p>
+        <div className="relative">
+    <Image
+      src="/mila-logo.svg"   // ⬅ your logo file
+      alt="MILA Logo"
+      width={70}
+      height={70}
+      className="drop-shadow-md animate-fadeIn"
+    />
+  </div>
         <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
           Micro-local insights for your last-minute stay.
         </h1>
