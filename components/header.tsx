@@ -13,7 +13,13 @@ export function Header({ onClearChat }: HeaderProps) {
         {/* Logo tile */}
         <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-slate-900 flex items-center justify-center shadow-lg ring-1 ring-white/20">
           <div className="absolute inset-0 rounded-xl bg-white/10" />
-          <span className="text-2xl">🏨</span>
+          <Image
+            src="/mila-logo.svg"   // ← your new logo
+            alt="MILA Logo"
+            width={36}
+            height={36}
+            className="rounded-md shadow-sm"
+          />
         </div>
 
         {/* Brand text */}
@@ -26,9 +32,6 @@ export function Header({ onClearChat }: HeaderProps) {
               Beta
             </span>
           </div>
-          <span className="text-xs font-medium text-slate-500">
-           Micro-local Insights &amp; Lodging Advisor for last-minute stays.
-          </span>
         </div>
       </div>
 
