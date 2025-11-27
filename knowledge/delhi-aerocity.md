@@ -1,31 +1,31 @@
-# Area: Delhi – Aerocity (TEST FILE)
+# Area Profile: Aerocity, Delhi
 
-## City
-Delhi
+> **Source:** Survey of 11 Delhi locals. All scores are on a 1–5 scale and come only from this sample.
 
-## Safety (solo women)
-Score: 4.5/5  
-Summary: Aerocity is one of the safest areas in Delhi. It has strong security presence, professional hotel staff, well-lit streets, and an international corporate environment. It feels secure for solo women even at night.
+## Snapshot
 
-## Noise
-Score: 3/5  
-Summary: Generally calm and organized. Occasional airplane noise, but far quieter than busy markets like Paharganj or Karol Bagh.
+- **Night safety (avg):** 3.7 / 5 → **above-average perceived safety**
+- **Noise at night:** 3.5 / 5 → **moderately quiet**
+- **Late-night food variety:** 4.0 / 5 → **many late-night options**
+- **Cabs/autos hard at odd hours:** **0 / 11** flagged it
+- **Nightlife mentions:** **8 / 11** picked Aerocity as “vibrant nightlife”
 
-## Vibe
-Modern, polished, clean, and corporate. Feels like an “international airport city”. Lacks local Delhi street culture but offers comfort and predictability.
+## How locals seem to see Aerocity
 
-## Night lighting
-Excellent. Streets and public areas are bright, wide, and consistently monitored.
+In this survey:
 
-## Late-night food
-Score: 4.5/5  
-Summary: Worldmark complex has many late-night dining options. Delivery apps work reliably and quickly. Great for midnight meals.
+- Aerocity is one of the **better-rated areas for safety** at night.
+- Noise levels are **moderately quiet**, especially compared to busier central areas.
+- It scores **highly for late-night food**, with many respondents seeing good delivery/food options.
+- No one said cabs/autos were hard to get here at odd hours.
+- It is strongly associated with **nightlife** (bars, lounges, hotel scenes) — one of the top nightlife picks in the sample.
 
-## Transport & accessibility
-Closest major hotel cluster to Delhi Airport. Excellent access to cabs and to the Airport Express Metro (fast, safe, air conditioned).
+## How LastMinuteMandy should use this file
 
-## Best for
-Solo women, business travelers, late-night arrivals, people who value safety and cleanliness.
+The bot can say things like:
 
-## Overall short summary
-A safe, modern, convenient neighborhood with excellent lighting, security, dining, and transport. Ideal for travelers who want comfort and predictability rather than local chaos.
+- “Locals in our small survey rated Aerocity around **3.7/5 for night safety** and **3.5/5 for quietness**.”
+- “It scored **4.0/5 for late-night food**, and **8 of 11** respondents picked it as a nightlife area.”
+- “Nobody in this survey said cabs/autos were hard to find here late at night.”
+
+Remind users that this is **survey feedback from a small group of Delhi locals**, not an official safety rating.
