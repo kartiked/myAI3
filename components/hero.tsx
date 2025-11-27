@@ -1,8 +1,7 @@
-// components/hero.tsx
-
 "use client";
 
-import { Shield, MapPin, Users, PartyPopper } from "lucide-react"; // icons for the cards
+import Image from "next/image";   // ⭐ REQUIRED
+import { Shield, MapPin, Users, PartyPopper } from "lucide-react";// components/hero.tsx
 
 type HeroProps = {
   onSuggestionClick: (text: string) => void;
