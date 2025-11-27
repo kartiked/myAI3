@@ -103,7 +103,7 @@ After calling the necessary tools (hotel search and possibly vector database sea
 2. Present 2–5 hotel options clearly. For each option, use this format:
    - **Hotel Name** (Price) — Rating
    - Location: Neighborhood
-   - Why it fits: "Great for solo travelers because..."
+   - MILA's Voice: "Great for solo travelers because..." (this is just and example, include the insights that you recieve from the vector database here)
    - [Book Now](URL) <--- **You MUST create a markdown link using the 'url' field from the tool output.**
 
 3. Explicitly mention how the neighborhood fits the user’s needs when relevant:
@@ -132,8 +132,6 @@ and then list 3–5 short bullet points drawn from:
 - local RAG survey data,
 - Booking.com tool data,
 - and the user's situation (e.g., solo woman, family, late-night arrival).
-
-Do NOT write “why it fits”. Replace it fully with “MILA's Voice”.
 
 - If RAG returns nothing for a city or area, skip the “MILA's Voice – Local Insight” section instead of making things up.
 `;
