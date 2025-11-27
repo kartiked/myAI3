@@ -19,6 +19,11 @@ import { UIMessage } from "ai";
 import { useEffect, useState, useRef } from "react";
 import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+
+
 
 const formSchema = z.object({
   message: z
@@ -66,6 +71,55 @@ const saveMessagesToStorage = (
     console.error("Failed to save messages from localStorage:", error);
   }
 };
+
+export default function TermsPage() {
+    return (
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+            <div className="max-w-2xl w-full bg-white rounded-3xl shadow-sm border border-slate-100 p-8 sm:p-12">
+                <div className="mb-8">
+                    <Link href="/">
+                        <Button variant="ghost" size="sm" className="gap-2 -ml-4 text-slate-500 hover:text-slate-900">
+                            <ArrowLeft className="w-4 h-4" />
+                            Back to Chat
+                        </Button>
+                    </Link>
+                </div>
+
+                <h1 className="text-3xl font-bold text-slate-900 mb-6">Terms of Use</h1>
+
+                <div className="prose prose-slate max-w-none">
+                    <p className="lead text-lg text-slate-600">
+                        Welcome to LastMinuteMandy. Please read these terms carefully before using our service.
+                    </p>
+
+                    <h3>1. Beta Project Disclaimer</h3>
+                    <p>
+                        <strong>LastMinuteMandy is a beta project</strong> created for demonstration and experimental purposes. It is <strong>not</strong> a licensed travel agency, and it does not facilitate direct bookings or payments.
+                    </p>
+
+                    <h3>2. No Guarantees</h3>
+                    <p>
+                        While we strive to provide accurate information through our integration with hotel search providers, we cannot guarantee the availability, price, or quality of any hotel listed. All information is subject to change without notice.
+                    </p>
+
+                    <h3>3. User Responsibility</h3>
+                    <p>
+                        You are responsible for verifying all details directly with the hotel or booking platform before making any reservations. LastMinuteMandy is not liable for any issues arising from your use of the suggestions provided.
+                    </p>
+
+                    <h3>4. Safety Information</h3>
+                    <p>
+                        Safety assessments provided by the AI are based on general neighborhood data and user reviews. They should not be taken as a guarantee of safety. Always exercise personal caution while traveling.
+                    </p>
+                </div>
+
+                <div className="mt-12 pt-8 border-t border-slate-100 text-center text-slate-500 text-sm">
+                    Last updated: November 2025
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function Chat() {
   const [isClient, setIsClient] = useState(false);
@@ -136,6 +190,8 @@ export default function Chat() {
     sendMessage({ text: data.message });
     form.reset();
   }
+
+  
 
   function clearChat() {
     const newMessages: UIMessage[] = [];
