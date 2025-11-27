@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { OWNER_NAME } from "@/config";
+// You can remove OWNER_NAME if you’re not using it
+// import { OWNER_NAME } from "@/config";
 
 interface HeaderProps {
   onClearChat: () => void;
