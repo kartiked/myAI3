@@ -40,7 +40,7 @@ export function Hero({ onSuggestionClick }: HeroProps) {
         <div className="flex flex-col items-center justify-center p-8 text-center space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="space-y-2 max-w-lg">
                 <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                    Find your perfect stay, <span className="text-gradient-gold">instantly.</span>
+                    Reliable hotel picks, <span className="text-gradient-gold">Powered by local insights.</span>
                 </h1>
                 <p className="text-slate-500 text-lg">
                     Local insights, safety checks, and live availability for Delhi & NYC.
