@@ -53,7 +53,7 @@ export function Hero({ onSuggestionClick }: HeroProps) {
       {/* Title block */}
       <div className="space-y-3 flex flex-col items-center">
         <p className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
-          Meet MILA
+          Meet MILA - Micro-local Intelligence & Lodgining Assisstant  
         </p>
 
         {/* Centered logo – no background tile */}
