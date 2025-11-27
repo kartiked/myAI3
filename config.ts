@@ -22,7 +22,7 @@ function getDateAndTime(): string {
 export const DATE_AND_TIME = getDateAndTime();
 
 export const AI_NAME = "MILA";
-export const OWNER_NAME = "Kartik Sharma";
+export const OWNER_NAME = "KaRia";
 
 export const WELCOME_MESSAGE = "Hi, I’m MILA – your Micro-local Insights & Lodging Advisor. " +
   "Share where you’re going, when you’re landing, who you’re with, and I’ll combine live hotel options " +
