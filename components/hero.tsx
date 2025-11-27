@@ -1,7 +1,8 @@
+// components/hero.tsx
 "use client";
 
-import Image from "next/image";   // ⭐ REQUIRED
-import { Shield, MapPin, Users, PartyPopper } from "lucide-react";// components/hero.tsx
+import Image from "next/image";
+import { Shield, MapPin, Users, PartyPopper } from "lucide-react";
 
 type HeroProps = {
   onSuggestionClick: (text: string) => void;
@@ -49,34 +50,47 @@ const SUGGESTED_QUERIES = [
 export function Hero({ onSuggestionClick }: HeroProps) {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-6">
-      {/* Title */}
-      <div className="space-y-3">
+      {/* Title block */}
+      <div className="space-y-3 flex flex-col items-center">
         <p className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
           Meet MILA
         </p>
-        <div className="relative">
-    {/* Centered logo */}
-  <div className="mt-1">
-    <Image
-      src="/mila-logo.svg"   // same file as header
-      alt="MILA Logo"
-      width={80}
-      height={80}
-      className="rounded-xl shadow-md"
-    />
-  </div>
-  </div>
-        <h1 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
-    Micro-local insights for your last-minute stay.
-  </h1>
 
-  <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto">
-    MILA blends live hotel options with{" "}
-    <span className="font-semibold">micro-local survey data</span> on
-    safety, noise, late-night food, and transport so you don&apos;t end up
-    in the wrong neighborhood at the wrong hour.
-  </p>
-</div>
+        {/* Centered logo – no background tile */}
+        <Image
+          src="/mila-logo.svg"
+          alt="MILA Logo"
+          width={80}
+          height={80}
+          className="rounded-xl shadow-md"
+        />
+
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
+          Micro-local insights for your last-minute stay.
+        </h1>
+
+        <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto">
+          MILA blends live hotel options with{" "}
+          <span className="font-semibold">micro-local survey data</span> on
+          safety, noise, late-night food, and transport so you don&apos;t end up
+          in the wrong neighborhood at the wrong hour.
+        </p>
+      </div>
+
+      {/* MILA's Voice explainer */}
+      <div className="rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3 text-xs sm:text-sm text-left max-w-xl mx-auto">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600 mb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          MILA&apos;s Voice – Local Insight
+        </div>
+        <p className="text-slate-600">
+          Whenever MILA uses local survey data, she highlights it under
+          <span className="font-semibold"> “MILA&apos;s Voice”</span> so you
+          know it&apos;s coming from real locals rather than generic internet
+          reviews.
+        </p>
+      </div>
+
       {/* Suggested prompts */}
       <div className="w-full text-left">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
