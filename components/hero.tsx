@@ -65,21 +65,6 @@ export function Hero({ onSuggestionClick }: HeroProps) {
           in the wrong neighborhood at the wrong hour.
         </p>
       </div>
-
-      {/* “MILA's Voice” concept blurb */}
-      <div className="rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3 text-xs sm:text-sm text-left max-w-xl mx-auto">
-        <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600 mb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          MILA&apos;s Voice – Local Insight
-        </div>
-        <p className="text-slate-600">
-          Whenever MILA uses local survey data, she highlights it under
-          <span className="font-semibold"> “MILA&apos;s Voice”</span> so you
-          know it&apos;s coming from real locals rather than generic internet
-          reviews.
-        </p>
-      </div>
-
       {/* Suggested prompts */}
       <div className="w-full text-left">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
