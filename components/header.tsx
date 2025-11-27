@@ -20,14 +20,14 @@ export function Header({ onClearChat }: HeaderProps) {
         <div className="flex flex-col leading-tight">
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold tracking-tight text-slate-900">
-              LastMinuteMandy
+              MILA
             </span>
             <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 shadow-sm">
               Beta
             </span>
           </div>
           <span className="text-xs font-medium text-slate-500">
-            Personalized available hotel rooms
+           Micro-local Insights &amp; Lodging Advisor for last-minute stays.
           </span>
         </div>
       </div>
