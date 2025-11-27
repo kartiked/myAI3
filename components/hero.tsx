@@ -50,29 +50,33 @@ export function Hero({ onSuggestionClick }: HeroProps) {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-6">
       {/* Title */}
-      <div className="space-y-2">
+      <div className="space-y-3">
         <p className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
           Meet MILA
         </p>
         <div className="relative">
+    {/* Centered logo */}
+  <div className="mt-1">
     <Image
-      src="/new-logo.svg"   // ⬅ your logo file
+      src="/mila-logo.svg"   // same file as header
       alt="MILA Logo"
-      width={70}
-      height={70}
-      className="drop-shadow-md animate-fadeIn"
+      width={80}
+      height={80}
+      className="rounded-xl shadow-md"
     />
   </div>
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
-          Micro-local insights for your last-minute stay.
-        </h1>
-        <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto">
-          MILA blends live hotel options with{" "}
-          <span className="font-semibold">micro-local survey data</span> on
-          safety, noise, late-night food, and transport so you don&apos;t end up
-          in the wrong neighborhood at the wrong hour.
-        </p>
-      </div>
+  </div>
+        <h1 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
+    Micro-local insights for your last-minute stay.
+  </h1>
+
+  <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto">
+    MILA blends live hotel options with{" "}
+    <span className="font-semibold">micro-local survey data</span> on
+    safety, noise, late-night food, and transport so you don&apos;t end up
+    in the wrong neighborhood at the wrong hour.
+  </p>
+</div>
       {/* Suggested prompts */}
       <div className="w-full text-left">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
