@@ -19,9 +19,9 @@ import { UIMessage } from "ai";
 import { useEffect, useState, useRef } from "react";
 import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
+
 
 
 
