@@ -195,7 +195,7 @@ export default function Chat() {
                             {...field}
                             id="chat-form-message"
                             className="h-14 w-full pl-6 pr-14 rounded-full bg-slate-50 border-slate-200 text-base shadow-sm transition-all focus:bg-white focus:border-blue-200 focus:ring-4 focus:ring-blue-50/50 placeholder:text-slate-400"
-                            placeholder="Ask Mandy for last-minute hotel help…"
+                            placeholder="Ask MILA for last-minute hotel help…"
                             disabled={status === "streaming"}
                             aria-invalid={fieldState.invalid}
                             autoComplete="off"
