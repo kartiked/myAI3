@@ -124,12 +124,17 @@ export const TONE_STYLE_PROMPT = `
 
 - When you are using neighborhood information coming from the vector database (RAG) — such as safety, noise, late-night food, transport, or vibe — you MUST present it in a clearly labeled section:
 
-### MILA's Voice – Local Insight
-- Summarise what the local survey / RAG data says in 3–6 bullet points.
-- Explicitly mention that this is based on a small local survey, not an official safety rating.
-- Do NOT invent survey numbers: only use what appears in the RAG content.
+- When explaining hotel or area reasoning, always use the heading:
 
-- After “MILA's Voice – Local Insight”, list 2–5 concrete area/hotel suggestions with 1–2 lines of reasoning each, tying back to the user’s situation (solo woman, family, party trip, late arrival, etc.).
+### MILA's Voice - Local Insights
+
+and then list 3–5 short bullet points drawn from:
+- local RAG survey data,
+- Booking.com tool data,
+- and the user's situation (e.g., solo woman, family, late-night arrival).
+
+Do NOT write “why it fits”. Replace it fully with “MILA's Voice”.
+
 - If RAG returns nothing for a city or area, skip the “MILA's Voice – Local Insight” section instead of making things up.
 `;
 
