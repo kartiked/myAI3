@@ -6,23 +6,21 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useChat } from "@ai-sdk/react";
-import { ArrowUp, Loader2, Plus, Square } from "lucide-react";
+import { ArrowUp, Loader2, Square } from "lucide-react";
 import { MessageWall } from "@/components/messages/message-wall";
 import { UIMessage } from "ai";
 import { useEffect, useState, useRef } from "react";
-import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
-import Link from "next/link";
-
-// Suggested example prompts for the home screen
-const SUGGESTED_QUERIES = [
-  "Solo woman, landing in Delhi at 11pm tonight. Budget ₹5–7k. Where should I stay?",
-  "2 adults, New York, 1–3 March. I want a quiet but central area under $250/night.",
-  "Family of 4 visiting NYC for the first time. Which neighborhoods are safest and best for kids?",
-  "Last-minute hotel near Delhi airport for a morning flight, but NOT in a shady area.",
-];
+import { WELCOME_MESSAGE } from "@/config";
+import { Header } from "@/components/header";
+import { Hero } from "@/components/hero";
+import { Footer } from "@/components/footer";
 
 const formSchema = z.object({
   message: z
@@ -67,7 +65,7 @@ const saveMessagesToStorage = (
     const data: StorageData = { messages, durations };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
-    console.error("Failed to save messages to localStorage:", error);
+    console.error("Failed to save messages from localStorage:", error);
   }
 };
 
@@ -80,10 +78,9 @@ export default function Chat() {
     typeof window !== "undefined"
       ? loadMessagesFromStorage()
       : { messages: [], durations: {} };
-
   const [initialMessages] = useState<UIMessage[]>(stored.messages);
 
-  const { messages, sendMessage, status, stop, setMessages } = useChat({
+  const { messages, sendMessage, status, stop, setMessages, append } = useChat({
     messages: initialMessages,
   });
 
@@ -108,27 +105,8 @@ export default function Chat() {
     });
   };
 
-  useEffect(() => {
-    if (
-      isClient &&
-      initialMessages.length === 0 &&
-      !welcomeMessageShownRef.current
-    ) {
-      const welcomeMessage: UIMessage = {
-        id: `welcome-${Date.now()}`,
-        role: "assistant",
-        parts: [
-          {
-            type: "text",
-            text: WELCOME_MESSAGE,
-          },
-        ],
-      };
-      setMessages([welcomeMessage]);
-      saveMessagesToStorage([welcomeMessage], {});
-      welcomeMessageShownRef.current = true;
-    }
-  }, [isClient, initialMessages.length, setMessages]);
+  // Removed the automatic welcome message effect to show the Hero section instead
+  // when there are no messages.
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -144,186 +122,122 @@ export default function Chat() {
 
   function clearChat() {
     const newMessages: UIMessage[] = [];
-    const newDurations: Record<string, number> = {};
+    const newDurations = {};
     setMessages(newMessages);
     setDurations(newDurations);
     saveMessagesToStorage(newMessages, newDurations);
     toast.success("Chat cleared");
+    welcomeMessageShownRef.current = false;
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f5f7fb] via-[#fffdfb] to-[#ffe8dd] flex items-center justify-center px-4 py-6">
-      <main className="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden">
-        {/* Brand header */}
-        <header className="flex items-center justify-between px-6 py-5 border-b bg-white/95">
-          <div className="flex items-center gap-4">
-            {/* Logo tile */}
-            <div className="relative w-14 h-14 rounded-2xl bg-[#003580]/5 flex items-center justify-center ring-2 ring-[#ffb35a]/60 shadow-sm">
-              <div className="absolute inset-0 rounded-2xl bg-white/40" />
-              <img
-                src="/mandy-logo.svg" // ensure this exists in /public
-                alt="LastMinuteMandy logo"
-                className="relative w-9 h-9"
-              />
-            </div>
+  const handleSuggestionClick = (text: string) => {
+    append({ role: "user", content: text });
+  };
 
-            {/* Brand text */}
-            <div className="flex flex-col leading-tight">
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-semibold tracking-tight text-[#003580]">
-                  LastMinuteMandy
-                </span>
-                <span className="inline-flex items-center rounded-full border border-[#ffb35a]/60 bg-[#fff3dd] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#b86a1f]">
-                  Beta
-                </span>
-              </div>
-              <span className="mt-1 text-sm text-slate-600">
-                Smart, safety-aware hotel picks when you&apos;re in a rush.
-              </span>
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
+      <Header onClearChat={clearChat} />
+
+      <main className="flex-1 flex flex-col max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="flex-1 bg-white rounded-3xl shadow-sm border border-slate-100 flex flex-col overflow-hidden relative">
+
+          {/* Messages area */}
+          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-8 scroll-smooth">
+            <div className="flex flex-col items-center min-h-full">
+              {isClient ? (
+                messages.length === 0 ? (
+                  <div className="flex-1 flex items-center justify-center w-full">
+                    <Hero onSuggestionClick={handleSuggestionClick} />
+                  </div>
+                ) : (
+                  <>
+                    <MessageWall
+                      messages={messages}
+                      status={status}
+                      durations={durations}
+                      onDurationChange={handleDurationChange}
+                    />
+                    {status === "submitted" && (
+                      <div className="flex justify-start max-w-3xl w-full mt-4 pl-1">
+                        <div className="flex items-center gap-2 text-sm text-slate-400 animate-pulse">
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Thinking...</span>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )
+              ) : (
+                <div className="flex justify-center items-center h-full w-full">
+                  <Loader2 className="w-6 h-6 animate-spin text-slate-300" />
+                </div>
+              )}
             </div>
           </div>
 
-          {/* New chat button */}
-          <Button
-            variant="outline"
-            size="sm"
-            className="rounded-full text-xs font-medium gap-1 border-slate-200 bg-slate-50 hover:bg-slate-100"
-            onClick={clearChat}
-          >
-            <Plus className="w-3 h-3" />
-            {CLEAR_CHAT_TEXT || "New search"}
-          </Button>
-        </header>
-
-        {/* Messages + suggestions area */}
-        <div className="flex-1 overflow-y-auto px-5 py-4">
-          <div className="flex flex-col items-center justify-end min-h-full">
-            {isClient ? (
-              <>
-                {/* Home screen suggestions – only when the chat is essentially fresh */}
-                {messages.length <= 1 && status === "ready" && (
-                  <div className="w-full max-w-3xl mb-4">
-                    <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                      What Mandy can help you with
-                    </div>
-                    <div className="grid gap-2 sm:grid-cols-2">
-                      {SUGGESTED_QUERIES.map((q) => (
-                        <button
-                          key={q}
-                          type="button"
-                          onClick={() => {
-                            form.setValue("message", q);
-                            form.handleSubmit(onSubmit)();
-                          }}
-                          className="text-left rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-2 text-xs text-slate-700 hover:border-[#003580]/40 hover:bg-[#f3f6ff] transition-colors"
-                        >
-                          {q}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <MessageWall
-                  messages={messages}
-                  status={status}
-                  durations={durations}
-                  onDurationChange={handleDurationChange}
-                />
-
-                {status === "submitted" && (
-                  <div className="flex justify-start max-w-3xl w-full mt-2">
-                    <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="flex justify-center max-w-2xl w-full">
-                <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-              </div>
-            )}
+          {/* Input area */}
+          <div className="border-t border-slate-50 bg-white/80 backdrop-blur p-4 sm:p-6">
+            <div className="max-w-3xl mx-auto w-full">
+              <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)} className="relative group">
+                <FieldGroup>
+                  <Controller
+                    name="message"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid} className="w-full">
+                        <FieldLabel htmlFor="chat-form-message" className="sr-only">
+                          Message
+                        </FieldLabel>
+                        <div className="relative flex items-center">
+                          <Input
+                            {...field}
+                            id="chat-form-message"
+                            className="h-14 w-full pl-6 pr-14 rounded-full bg-slate-50 border-slate-200 text-base shadow-sm transition-all focus:bg-white focus:border-blue-200 focus:ring-4 focus:ring-blue-50/50 placeholder:text-slate-400"
+                            placeholder="Ask Mandy for last-minute hotel help…"
+                            disabled={status === "streaming"}
+                            aria-invalid={fieldState.invalid}
+                            autoComplete="off"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                form.handleSubmit(onSubmit)();
+                              }
+                            }}
+                          />
+                          <div className="absolute right-2">
+                            {(status === "ready" || status === "error") && (
+                              <Button
+                                className="rounded-full h-10 w-10 bg-[#003580] hover:bg-[#002860] text-white shadow-md transition-transform hover:scale-105 active:scale-95"
+                                type="submit"
+                                disabled={!field.value.trim()}
+                                size="icon"
+                              >
+                                <ArrowUp className="w-5 h-5" />
+                              </Button>
+                            )}
+                            {(status === "streaming" || status === "submitted") && (
+                              <Button
+                                className="rounded-full h-10 w-10 bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200"
+                                size="icon"
+                                variant="ghost"
+                                onClick={() => stop()}
+                              >
+                                <Square className="w-4 h-4 fill-current" />
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      </Field>
+                    )}
+                  />
+                </FieldGroup>
+              </form>
+            </div>
           </div>
         </div>
-
-        {/* Input + footer */}
-        <footer className="border-t bg-white/90 px-5 pt-3 pb-2">
-          <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup>
-              <Controller
-                name="message"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel
-                      htmlFor="chat-form-message"
-                      className="sr-only"
-                    >
-                      Message
-                    </FieldLabel>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        id="chat-form-message"
-                        className="h-12 pr-12 pl-4 rounded-full bg-slate-50 border-slate-200 focus-visible:ring-[#003580]"
-                        placeholder="Ask Mandy for last-minute hotel help…"
-                        disabled={status === "streaming"}
-                        aria-invalid={fieldState.invalid}
-                        autoComplete="off"
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" && !e.shiftKey) {
-                            e.preventDefault();
-                            form.handleSubmit(onSubmit)();
-                          }
-                        }}
-                      />
-                      {(status === "ready" || status === "error") && (
-                        <Button
-                          className="absolute right-1.5 top-1.5 rounded-full h-9 w-9 bg-[#003580] hover:bg-[#022347]"
-                          type="submit"
-                          disabled={!field.value.trim()}
-                          size="icon"
-                        >
-                          <ArrowUp className="w-4 h-4" />
-                        </Button>
-                      )}
-                      {(status === "streaming" || status === "submitted") && (
-                        <Button
-                          className="absolute right-1.5 top-1.5 rounded-full h-9 w-9"
-                          size="icon"
-                          variant="outline"
-                          onClick={() => {
-                            stop();
-                          }}
-                        >
-                          <Square className="w-4 h-4" />
-                        </Button>
-                      )}
-                    </div>
-                  </Field>
-                )}
-              />
-            </FieldGroup>
-          </form>
-
-          {/* Beta disclaimer */}
-          <p className="mt-2 text-[11px] text-center text-slate-500">
-            LastMinuteMandy is a beta project. Hotel and neighborhood
-            suggestions may be incomplete or inaccurate and are not a substitute
-            for your own judgment or official travel advisories.
-          </p>
-
-          <div className="mt-1 text-[11px] text-center text-muted-foreground">
-            © {new Date().getFullYear()} {OWNER_NAME} ·{" "}
-            <Link href="/terms" className="underline">
-              Terms of Use
-            </Link>{" "}
-            · Powered by{" "}
-            <Link href="https://ringel.ai/" className="underline">
-              Ringel.AI
-            </Link>
-          </div>
-        </footer>
       </main>
+
+      <Footer />
     </div>
   );
 }
