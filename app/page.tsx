@@ -131,8 +131,10 @@ export default function Chat() {
   }
 
   const handleSuggestionClick = (text: string) => {
-    append({ role: "user", content: text });
-  };
+  // send the suggestion as if the user typed it
+  sendMessage({ text });
+};
+
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
