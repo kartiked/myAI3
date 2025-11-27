@@ -21,12 +21,12 @@ function getDateAndTime(): string {
 
 export const DATE_AND_TIME = getDateAndTime();
 
-export const AI_NAME = "LastMinuteMandy";
+export const AI_NAME = "MILA";
 export const OWNER_NAME = "Kartik Sharma";
 
-export const WELCOME_MESSAGE = `Hi, I’m LastMinuteMandy 👋
-
-Tell me your city, dates, number of guests and rough budget, and I’ll suggest last-minute hotel options in Delhi or New York..`
+export const WELCOME_MESSAGE = "Hi, I’m MILA – your Micro-local Insights & Lodging Advisor. " +
+  "Share where you’re going, when you’re landing, who you’re with, and I’ll combine live hotel options " +
+  "with micro-local safety, noise, food, and vibe insights.";
 
 export const CLEAR_CHAT_TEXT = "New";
 
