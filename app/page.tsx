@@ -80,7 +80,7 @@ export default function Chat() {
       : { messages: [], durations: {} };
   const [initialMessages] = useState<UIMessage[]>(stored.messages);
 
-  const { messages, sendMessage, status, stop, setMessages, append } = useChat({
+  const { messages, sendMessage, status, stop, setMessages} = useChat({
     messages: initialMessages,
   });
 
