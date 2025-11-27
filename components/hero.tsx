@@ -57,7 +57,7 @@ export function Hero({ onSuggestionClick }: HeroProps) {
         </p>
         <div className="relative">
     <Image
-      src="/mila-logo.svg"   // ⬅ your logo file
+      src="/new-logo.svg"   // ⬅ your logo file
       alt="MILA Logo"
       width={70}
       height={70}
