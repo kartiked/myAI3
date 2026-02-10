@@ -14,13 +14,13 @@ export function Header({ onClearChat }: HeaderProps) {
       <div className="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <Image
-            src="/galchu-logo.svg"
-            alt="Galchu Logo"
-            width={42}
-            height={42}
-            className="rounded-full"
-          />
+         <Image
+  src="/galchu-logo.png"
+  alt="Galchu"
+  width={40}
+  height={40}
+  priority
+/>
           <span className="text-lg font-semibold tracking-tight text-rose-900">
             Galchu
           </span>
