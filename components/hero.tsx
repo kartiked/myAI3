@@ -38,14 +38,15 @@ export function Hero({ onSuggestionClick }: HeroProps) {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-8">
       {/* Intro */}
-      <div className="flex flex-col items-center gap-4">
-        <Image
-          src="/galchu-logo.svg"
-          alt="Galchu"
-          width={96}
-          height={96}
-          className="rounded-full"
-        />
+      <div className="flex justify-center">
+  <Image
+    src="/galchu-logo.png"
+    alt="Galchu"
+    width={96}
+    height={96}
+    priority
+  />
+</div>
 
         <h1 className="text-2xl sm:text-3xl font-semibold text-rose-900 tracking-tight">
           Galchu
