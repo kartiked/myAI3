@@ -1,42 +1,83 @@
 "use client";
 
 import Image from "next/image";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Heart, Moon, Sparkles, MessageCircle } from "lucide-react";
 
-interface HeaderProps {
-  onClearChat: () => void;
-}
+type HeroProps = {
+  onSuggestionClick: (text: string) => void;
+};
 
-export function Header({ onClearChat }: HeaderProps) {
+const SUGGESTED_QUERIES = [
+  {
+    text: "hey galchu, i had a long day and just wanna talk",
+    icon: Heart,
+    bg: "bg-rose-50 hover:bg-rose-100",
+    iconColor: "text-rose-600",
+  },
+  {
+    text: "i’m tired but i don’t wanna sleep yet",
+    icon: Moon,
+    bg: "bg-purple-50 hover:bg-purple-100",
+    iconColor: "text-purple-600",
+  },
+  {
+    text: "can you distract me a little?",
+    icon: Sparkles,
+    bg: "bg-amber-50 hover:bg-amber-100",
+    iconColor: "text-amber-600",
+  },
+  {
+    text: "just checking in 🩶",
+    icon: MessageCircle,
+    bg: "bg-slate-50 hover:bg-slate-100",
+    iconColor: "text-slate-600",
+  },
+];
+
+export function Hero({ onSuggestionClick }: HeroProps) {
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-rose-50/70 border-b border-rose-100">
-      <div className="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between">
-        {/* Brand */}
-        <div className="flex items-center gap-3">
-          <Image
-            src="/galchu-logo.svg"
-            alt="Galchu Logo"
-            width={42}
-            height={42}
-            className="rounded-full"
-          />
-          <span className="text-lg font-semibold tracking-tight text-rose-900">
-            Galchu
-          </span>
-        </div>
+    <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-8">
+      {/* Intro */}
+      <div className="flex flex-col items-center gap-4">
+        <Image
+          src="/galchu-logo.svg"
+          alt="Galchu"
+          width={96}
+          height={96}
+          className="rounded-full"
+        />
 
-        {/* New chat */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onClearChat}
-          className="rounded-full text-xs border-rose-200 bg-white hover:bg-rose-50 hover:text-rose-700 transition"
-        >
-          <Plus className="w-3.5 h-3.5 mr-1" />
-          New chat
-        </Button>
+        <h1 className="text-2xl sm:text-3xl font-semibold text-rose-900 tracking-tight">
+          Galchu
+        </h1>
+
+        <p className="text-sm sm:text-base text-rose-700 max-w-md">
+          A soft place to land.  
+          Talk. Pause. Be a little honest.
+        </p>
       </div>
-    </header>
+
+      {/* Suggestions */}
+      <div className="w-full">
+        <p className="mb-3 text-xs uppercase tracking-widest text-rose-500 font-medium">
+          Try saying
+        </p>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          {SUGGESTED_QUERIES.map(({ text, icon: Icon, bg, iconColor }) => (
+            <button
+              key={text}
+              onClick={() => onSuggestionClick(text)}
+              className={`flex items-start gap-3 rounded-2xl px-4 py-3 text-left text-sm transition ${bg}`}
+            >
+              <div className="mt-0.5">
+                <Icon className={`w-5 h-5 ${iconColor}`} />
+              </div>
+              <span className="text-slate-700">{text}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
