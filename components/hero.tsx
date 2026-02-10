@@ -1,8 +1,7 @@
-// components/hero.tsx
 "use client";
 
 import Image from "next/image";
-import { Shield, MapPin, Users, PartyPopper } from "lucide-react";
+import { Heart, Moon, Sparkles, MessageCircle } from "lucide-react";
 
 type HeroProps = {
   onSuggestionClick: (text: string) => void;
@@ -10,103 +9,73 @@ type HeroProps = {
 
 const SUGGESTED_QUERIES = [
   {
-    text:
-      "Solo woman landing in Delhi at 11pm tonight, budget ₹4–6k. Which area is safest for a one-night stay?",
-    label: "Safety first",
-    icon: Shield,
-    cardClass:
-      "bg-sky-50/90 hover:bg-sky-50 border-sky-100 hover:border-sky-200",
-    iconClass: "text-sky-700",
+    text: "hey galchu, i had a long day and just wanna talk",
+    icon: Heart,
+    bg: "bg-rose-50 hover:bg-rose-100",
+    iconColor: "text-rose-600",
   },
   {
-    text:
-      "2 adults, New York, 1–3 March. I want a quiet but central area under $250/night.",
-    label: "Quiet & central",
-    icon: MapPin,
-    cardClass:
-      "bg-emerald-50/90 hover:bg-emerald-50 border-emerald-100 hover:border-emerald-200",
-    iconClass: "text-emerald-700",
+    text: "i’m tired but i don’t wanna sleep yet",
+    icon: Moon,
+    bg: "bg-purple-50 hover:bg-purple-100",
+    iconColor: "text-purple-600",
   },
   {
-    text:
-      "Family of 4 with an early morning flight from Delhi. Should we stay in Dwarka or Aerocity?",
-    label: "Family & airport",
-    icon: Users,
-    cardClass:
-      "bg-amber-50/90 hover:bg-amber-50 border-amber-100 hover:border-amber-200",
-    iconClass: "text-amber-700",
+    text: "can you distract me a little?",
+    icon: Sparkles,
+    bg: "bg-amber-50 hover:bg-amber-100",
+    iconColor: "text-amber-600",
   },
   {
-    text:
-      "Group of friends doing a last-minute trip to NYC. Which areas balance nightlife and safety?",
-    label: "Nightlife & safety",
-    icon: PartyPopper,
-    cardClass:
-      "bg-violet-50/90 hover:bg-violet-50 border-violet-100 hover:border-violet-200",
-    iconClass: "text-violet-700",
+    text: "just checking in 🩶",
+    icon: MessageCircle,
+    bg: "bg-slate-50 hover:bg-slate-100",
+    iconColor: "text-slate-600",
   },
-] as const;
+];
 
 export function Hero({ onSuggestionClick }: HeroProps) {
   return (
-    <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-6">
-      {/* Title block */}
-      <div className="space-y-3 flex flex-col items-center">
-        <p className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
-          Meet MILA - Micro-local Intelligence & Lodgining Assisstant  
-        </p>
-
-        {/* Centered logo – no background tile */}
+    <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-8">
+      {/* Intro */}
+      <div className="flex flex-col items-center gap-4">
         <Image
-          src="/mila-logo.svg"
-          alt="MILA Logo"
-          width={80}
-          height={80}
-          className="rounded-xl shadow-md"
+          src="/galchu-logo.svg"
+          alt="Galchu"
+          width={96}
+          height={96}
+          className="rounded-full"
         />
 
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
-          Micro-local insights for your last-minute stay.
+        <h1 className="text-2xl sm:text-3xl font-semibold text-rose-900 tracking-tight">
+          Galchu
         </h1>
 
-        <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto">
-          MILA blends live hotel options with{" "}
-          <span className="font-semibold">micro-local survey data</span> on
-          safety, noise, late-night food, and transport so you don&apos;t end up
-          in the wrong neighborhood at the wrong hour.
+        <p className="text-sm sm:text-base text-rose-700 max-w-md">
+          A soft place to land.  
+          Talk. Pause. Be a little honest.
         </p>
       </div>
 
-    
-
-      {/* Suggested prompts */}
-      <div className="w-full text-left">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Try asking
+      {/* Suggestions */}
+      <div className="w-full">
+        <p className="mb-3 text-xs uppercase tracking-widest text-rose-500 font-medium">
+          Try saying
         </p>
+
         <div className="grid gap-3 sm:grid-cols-2">
-          {SUGGESTED_QUERIES.map(
-            ({ text, label, icon: Icon, cardClass, iconClass }) => (
-              <button
-                key={text}
-                type="button"
-                onClick={() => onSuggestionClick(text)}
-                className={`group relative overflow-hidden rounded-2xl border px-3 py-3 sm:px-4 sm:py-3.5 text-left text-xs sm:text-sm transition-colors ${cardClass}`}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl bg-white/70 shadow-sm">
-                    <Icon className={`w-4 h-4 ${iconClass}`} />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                      {label}
-                    </p>
-                    <p className="text-slate-800 leading-snug">{text}</p>
-                  </div>
-                </div>
-              </button>
-            )
-          )}
+          {SUGGESTED_QUERIES.map(({ text, icon: Icon, bg, iconColor }) => (
+            <button
+              key={text}
+              onClick={() => onSuggestionClick(text)}
+              className={`flex items-start gap-3 rounded-2xl px-4 py-3 text-left text-sm transition ${bg}`}
+            >
+              <div className="mt-0.5">
+                <Icon className={`w-5 h-5 ${iconColor}`} />
+              </div>
+              <span className="text-slate-700">{text}</span>
+            </button>
+          ))}
         </div>
       </div>
     </div>
