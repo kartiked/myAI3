@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Heart, Moon, Sparkles, MessageCircle } from "lucide-react";
+import { Heart, Sparkles, MessageCircle, Gift } from "lucide-react";
 
 type HeroProps = {
   onSuggestionClick: (text: string) => void;
@@ -9,75 +9,92 @@ type HeroProps = {
 
 const SUGGESTED_QUERIES = [
   {
-    text: "hey galchu, i had a long day and just wanna talk",
-    icon: Heart,
-    bg: "bg-rose-50 hover:bg-rose-100",
-    iconColor: "text-rose-600",
-  },
-  {
-    text: "i’m tired but i don’t wanna sleep yet",
-    icon: Moon,
-    bg: "bg-purple-50 hover:bg-purple-100",
-    iconColor: "text-purple-600",
-  },
-  {
-    text: "can you distract me a little?",
-    icon: Sparkles,
-    bg: "bg-amber-50 hover:bg-amber-100",
-    iconColor: "text-amber-600",
-  },
-  {
-    text: "just checking in 🩶",
+    text: "hi",
+    label: "Start soft",
     icon: MessageCircle,
-    bg: "bg-slate-50 hover:bg-slate-100",
-    iconColor: "text-slate-600",
+    color: "rose",
   },
-];
+  {
+    text: "i'm bored",
+    label: "Let’s talk",
+    icon: Sparkles,
+    color: "pink",
+  },
+  {
+    text: "do you have something to tell me?",
+    label: "Curious mood",
+    icon: Gift,
+    color: "purple",
+  },
+  {
+    text: "you seem suspicious today",
+    label: "Tease mode",
+    icon: Heart,
+    color: "red",
+  },
+] as const;
 
 export function Hero({ onSuggestionClick }: HeroProps) {
   return (
-    <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-8">
-      {/* Intro */}
-      <div className="flex justify-center">
-  <Image
-    src="/galchu-logo.png"
-    alt="Galchu"
-    width={96}
-    height={96}
-    priority
-  />
-</div>
+    <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center gap-8 py-10">
 
-        <h1 className="text-2xl sm:text-3xl font-semibold text-rose-900 tracking-tight">
-          Galchu
+      {/* Brand Intro */}
+      <div className="space-y-4 flex flex-col items-center">
+        <p className="inline-flex items-center rounded-full bg-rose-100 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-rose-600">
+          Meet Galchu
+        </p>
+
+        <Image
+          src="/galchu-logo.png"
+          alt="Galchu Logo"
+          width={110}
+          height={110}
+          className="rounded-full"
+        />
+
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-800">
+          A tiny little surprise waiting for you.
         </h1>
 
-        <p className="text-sm sm:text-base text-rose-700 max-w-md">
-          A soft place to land.  
-          Talk. Pause. Be a little honest.
+        <p className="text-sm sm:text-base text-slate-500 max-w-xl">
+          This isn’t just a chat.  
+          It’s something a little personal.  
+          Start talking and see where it goes.
         </p>
       </div>
-    
+
+      {/* Suggestions */}
       <div className="w-full">
-        <p className="mb-3 text-xs uppercase tracking-widest text-rose-500 font-medium">
+        <p className="mb-4 text-xs uppercase tracking-widest text-rose-500 font-medium">
           Try saying
         </p>
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          {SUGGESTED_QUERIES.map(({ text, icon: Icon, bg, iconColor }) => (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {SUGGESTED_QUERIES.map(({ text, label, icon: Icon, color }) => (
             <button
               key={text}
+              type="button"
               onClick={() => onSuggestionClick(text)}
-              className={`flex items-start gap-3 rounded-2xl px-4 py-3 text-left text-sm transition ${bg}`}
+              className="group rounded-2xl border border-rose-100 bg-rose-50/70 hover:bg-rose-100 transition-all px-4 py-4 text-left shadow-sm"
             >
-              <div className="mt-0.5">
-                <Icon className={`w-5 h-5 ${iconColor}`} />
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm">
+                  <Icon className="w-5 h-5 text-rose-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-rose-400">
+                    {label}
+                  </p>
+                  <p className="text-sm text-slate-700 mt-1 leading-snug">
+                    {text}
+                  </p>
+                </div>
               </div>
-              <span className="text-slate-700">{text}</span>
             </button>
           ))}
         </div>
       </div>
+
     </div>
   );
 }
