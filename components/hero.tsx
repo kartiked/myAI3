@@ -57,8 +57,7 @@ export function Hero({ onSuggestionClick }: HeroProps) {
           Talk. Pause. Be a little honest.
         </p>
       </div>
-
-      {/* Suggestions */}
+    
       <div className="w-full">
         <p className="mb-3 text-xs uppercase tracking-widest text-rose-500 font-medium">
           Try saying
