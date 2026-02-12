@@ -21,7 +21,7 @@ function getDateAndTime(): string {
 
 export const DATE_AND_TIME = getDateAndTime();
 
-export const AI_NAME = "MILA";
+export const AI_NAME = "Galchu Bot";
 export const OWNER_NAME = "Kartik & Ria";
 
 export const WELCOME_MESSAGE = "Hi, I’m MILA – your Micro-local Insights & Lodging Advisor. " +
